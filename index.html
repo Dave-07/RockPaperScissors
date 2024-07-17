@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RockPaperScissors</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            position: relative;
+            font-weight: bold;
+        }
+
+        .rps-container p {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .rps-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translate(-50%, -50%);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background-color: papayawhip;
+            padding: 50px 150px;
+        }
+
+        .rps-container h1 {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 2.5rem;
+            white-space: nowrap;
+        }
+
+        .rpsBtn {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .rpsBtn button:nth-child(2) {
+            margin: 40px 30px;
+        }
+
+        .rpsBtn button {
+            padding: 5px;
+            font-size: 4rem;
+            border: 1px solid black;
+            border-radius: 50%;
+            min-width: 100px;
+            background-image: radial-gradient(hsl(240, 100%, 50%), lightblue);
+            box-shadow: 2px 2px 3px black;
+        }
+
+        .rpsBtn button:nth-child(n):hover {
+            cursor: pointer;
+            background-image: radial-gradient(hsl(240, 100%, 70%), lightblue);
+            transform: scale(1.2);
+            transition: 0.5s ease;
+        }
+
+        .player,
+        .computer {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+
+        }
+
+        .result {
+            font-size: 3rem;
+            margin: 20px 0;
+            text-shadow: 2px 2px 2px black;
+        }
+
+        .green-win, .p-score {
+            color: green;
+        }
+
+        .red-loose, .c-score{
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="rps-container">
+        <h1>Rock - Paper - Scissors</h1>
+        <div class="rpsBtn">
+            <button onclick="playGame('rock')" class="rock">👊</button>
+            <button onclick="playGame('paper')" class="paper">🖐</button>
+            <button onclick="playGame('scissors')" class="scissors">✌</button>
+        </div>
+        <p class="player">player: </p>
+        <p class="computer">computer: </p>
+        <p class="result"></p>
+        <p>Player Score: <span class="p-score">0</span></p>
+        <p>Computer Score: <span class="c-score">0</span></p>
+    </div>
+
+
+    <script>
+        const choices = ['rock', 'paper', 'scissors'];
+
+        let playerDisplay = document.querySelector('.player');
+        let computerDisplay = document.querySelector('.computer');
+        let resultDisplay = document.querySelector('.result');
+        let playerScoreDisplay = document.querySelector('.p-score');
+        let computerScoreDisplay = document.querySelector('.c-score');
+
+        let playerChoice = 0;
+        let playerScore = 0;
+        let computerScore = 0;
+        let reuslt = "";
+
+
+        let rock = document.querySelector('.rock');
+        let paper = document.querySelector('.paper')[1];
+        let scissors = document.querySelector('.scissors')[2];
+
+        function playGame(playerChoice) {
+            const randNum = Math.floor(Math.random() * 3);
+            const computerChoice = choices[randNum];
+            let result = "";
+
+            if (playerChoice === computerChoice) {
+                result = "IT'S A TIE";
+            } else {
+                switch (playerChoice) {
+
+                    case 'rock':
+                        result = (computerChoice === 'scissors') ? 'YOU WIN!' : 'YOU LOOSE'
+                        break;
+
+                    case 'paper':
+                        result = (computerChoice === 'rock') ? 'YOU WIN!' : 'YOU LOOSE'
+                        break;
+
+                    case 'scissors':
+                        result = (computerChoice === 'paper') ? 'YOU WIN!' : 'YOU LOOSE'
+                        break;
+                }
+            }
+
+
+            playerDisplay.textContent = `PLAYER: ${playerChoice}`;
+            computerDisplay.textContent = `COMPUTER: ${computerChoice}`;
+            resultDisplay.textContent = result;
+
+            resultDisplay.classList.remove('green-win', 'red-loose');
+
+            switch (result) {
+                case 'YOU WIN!':
+                    resultDisplay.classList.add('green-win');
+                    playerScore++;
+                    playerScoreDisplay.textContent = playerScore;
+                    break;
+                case 'YOU LOOSE':
+                    resultDisplay.classList.add('red-loose');
+                    computerScore++;
+                    computerScoreDisplay.textContent = computerScore;
+                    break;
+            }
+        }
+
+    </script>
+</body>
+
+</html>
